@@ -1,21 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#f46943"
+        android:elevation="8dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_marginRight="4dp"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/restaurant"/>
+            <TextView
+                android:id="@+id/app_name"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Khana Khazana"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:textColor="#fffdfd"/>
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
     <TextView
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/nametextview"
         android:textSize="24sp"
-        android:text="hii"/>
+        android:text="hii"
+        android:textAllCaps="true"/>
     <TextView
         android:paddingLeft="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/description"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        />
     <TextView
         android:paddingTop="8dp"
         android:paddingLeft="8dp"
@@ -23,7 +55,83 @@
         android:layout_height="wrap_content"
         android:id="@+id/contact"
         android:textSize="16dp"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="8dp"
+    android:layout_marginTop="12dp"
+    android:id="@+id/linear">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Menu"
 
+        android:textSize="18sp"/>
 
-
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3">
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:text="cart"
+    android:onClick="submit"/>
+        </LinearLayout>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Reset"
+            android:onClick="reset"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#000"
+        android:layout_marginBottom="8dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Order summary:"
+        android:textColor="#f8000000"
+        android:textSize="18sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:id="@+id/ordersummary"
+        android:textSize="16sp"
+        android:textColor="#f8000000"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:onClick="checkout"
+            android:text="checkout"/>
+    </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

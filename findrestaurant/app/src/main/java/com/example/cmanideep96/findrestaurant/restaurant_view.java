@@ -47,10 +47,14 @@ public class restaurant_view extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
 //    private GoogleApiClient client;
+
     public RetrieveFeedTask restaurantlist = new RetrieveFeedTask();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurant_layout);
+        TextView app_name = (TextView)findViewById(R.id.app_name);
+        Typeface face = Typeface.createFromAsset(getAssets(),"fonts/GreatVibes-Regular.otf");
+        app_name.setTypeface(face);
         Bundle b = getIntent().getExtras();
         city_name = b.getCharSequence("name").toString();
 
@@ -75,7 +79,7 @@ public class restaurant_view extends AppCompatActivity {
         protected JSONObject doInBackground(Void... urls) {
 
             try {
-                String OPEN_WEATHER_MAP = "http://192.168.1.74/try2.php/?location=" + city_name;
+                String OPEN_WEATHER_MAP = "http://10.0.5.62/try2.php/?location=" + city_name;
                 URL url = new URL(OPEN_WEATHER_MAP);
                 HttpURLConnection connection =
                         (HttpURLConnection) url.openConnection();
@@ -112,14 +116,18 @@ public class restaurant_view extends AppCompatActivity {
                     int k= details.length();
                     List<String> recentHistory = new ArrayList<String>();
                         i=0;
-                        String name ="";
+
                         while(i!=k){
-                            recentHistory.add(i,details.getJSONObject(i).getString("name"));
+                            char name =details.getJSONObject(i).getString("name").charAt(0);
+                            String n=name+"";
+                            n=n.toUpperCase();
+                            String S=n+details.getJSONObject(i).getString("name").substring(1);
+                            recentHistory.add(i,S+"     "+details.getJSONObject(i).getString("locality"));
                             i=i+1;
                         }
 //                    String name = details.getJSONObject(0).getString("name")+","+details.getJSONObject(1).getString("name");
                     TextView textView = (TextView)findViewById(R.id.city_view);
-                    textView.setText(name);
+                    textView.setText("Restaurants in "+city_name);
                     ArrayAdapter adapter = new ArrayAdapter<String>(restaurant_view.this, R.layout.restlist, recentHistory);
 
                     ListView listView = (ListView) findViewById(R.id.restaurant_list_view);
