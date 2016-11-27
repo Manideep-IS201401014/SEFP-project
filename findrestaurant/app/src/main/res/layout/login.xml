@@ -39,32 +39,32 @@
     </android.support.v7.widget.Toolbar>
     <TextView
         android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
         android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textColor="#000"
-        android:text="Order Delicious food !!!!"/>
+        android:text="Login"/>
     <EditText
-        android:id="@+id/city_view"
+        android:id="@+id/username"
+        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the place"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:inputType="textMultiLine" />
+        android:hint="Username"/>
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Password"/>
     <Button
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
+        android:layout_margin="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Find restaurants"
-        android:onClick="process"/>
-    <Button
-        android:layout_margin="16dp"
+        android:text="Login"
+        android:onClick="Login"/>
+    <TextView
+        android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recent History"
-        android:onClick="history"/>
+        />
 </LinearLayout>

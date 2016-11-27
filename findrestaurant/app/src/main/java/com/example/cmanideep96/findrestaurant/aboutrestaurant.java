@@ -32,6 +32,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,14 +80,22 @@ public class aboutrestaurant extends AppCompatActivity {
         textView.setText("");
     }
     public void checkout(View view){
-        Intent intent = new Intent(aboutrestaurant.this,ordersummary.class);
+        Intent intent = new Intent(aboutrestaurant.this,testlogin.class);
 
         Bundle b = new Bundle();
 //        Inserts a String value into the mapping of this Bundle
-        b.putString("summ",check);
-        b.putString("cost",g+"");
-        intent.putExtras(b);
-        startActivity(intent);
+        if(check!="") {
+            b.putString("summ", check);
+            b.putString("cost", g + "");
+            b.putString("name",restaurantName);
+            intent.putExtras(b);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            Toast toast =Toast.makeText(this,"Cart is empty",Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
     public void submit(View view) {
 
@@ -102,7 +111,13 @@ public class aboutrestaurant extends AppCompatActivity {
         int f=0;
         for(int i=0;i<price.length;i++){
             if(i!=0){
-                f =f+Integer.parseInt(price[i].substring(0,3));
+                try {
+
+
+                    f = f + Integer.parseInt(price[i].substring(0, 3));
+                }catch (Exception e) {
+                    f = f + Integer.parseInt(price[i].substring(0, 2));
+                }
             }
 
         }
@@ -187,8 +202,10 @@ public class aboutrestaurant extends AppCompatActivity {
         protected JSONObject doInBackground(Void... urls) {
 
             try {
-                String OPEN_WEATHER_MAP = "http://10.0.5.62/abtrest.php/?name=" + restaurantName;
-                URL url = new URL(OPEN_WEATHER_MAP);
+
+
+                String MY_API = "http://192.168.43.38/abtrest.php/?name=" + restaurantName;
+                URL url = new URL(MY_API);
                 HttpURLConnection connection =
                         (HttpURLConnection) url.openConnection();
                 // extracting api

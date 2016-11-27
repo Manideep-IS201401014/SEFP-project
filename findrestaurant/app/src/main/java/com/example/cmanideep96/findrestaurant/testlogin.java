@@ -5,14 +5,8 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,45 +15,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Created by cmanideep96 on 05/11/2016.
+ * Created by cmanideep96 on 25/11/2016.
  */
-public class ordersummary extends AppCompatActivity {
-    public RetrieveFeedTask ordersumm = new RetrieveFeedTask();
-    String summary ="";
-    String username="";
-    String restaurantName="";
-    String cost="";
+public class testlogin extends AppCompatActivity{
+    Bundle b;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.summary);
-        TextView app_name = (TextView)findViewById(R.id.app_name);
-        Typeface face = Typeface.createFromAsset(getAssets(),"fonts/GreatVibes-Regular.otf");
-        app_name.setTypeface(face);
-        Bundle b = getIntent().getExtras();
-        summary=b.getCharSequence("summ").toString();
-        summary=summary.trim();
-        cost=b.getCharSequence("cost").toString();
-        TextView textView = (TextView)findViewById(R.id.order);
-        String[] price = summary.split(",");
-        String r="";
-        for(int i=0;i<price.length;i++){
-            r=r+price[i]+"\n";
-        }
-        textView.setText("Total Cost: RS."+cost+"\n\n"+r);
-        username=b.getCharSequence("username").toString();
-        restaurantName=b.getCharSequence("name").toString();
-        ordersumm.execute();
+        setContentView(R.layout.testlogin);
+        b = getIntent().getExtras();
+        RetrieveFeedTask retrieveFeedTask=new RetrieveFeedTask();
+        retrieveFeedTask.execute();
     }
-    public void back(View view){
-        Intent intent = new Intent(ordersummary.this,MainActivity.class);
-        startActivity(intent);
-    }
-
-
     class RetrieveFeedTask extends AsyncTask<Void, Void, JSONObject> {
 
         private Exception exception;
@@ -74,9 +42,9 @@ public class ordersummary extends AppCompatActivity {
         protected JSONObject doInBackground(Void... urls) {
 
             try {
-                String j=URLEncoder.encode(summary, "UTF-8");
-//                String MY_API = "http://10.0.5.62/insert.php/?summary=" + j+"&user="+username+"&name="+restaurantName+"&cost=990";
-                String MY_API ="http://192.168.43.38/insert.php/?summary="+j+"&user="+username+"&cost="+cost+"&name="+restaurantName;
+                String j= URLEncoder.encode("", "UTF-8");
+                String MY_API = "http://192.168.43.38/login2.php";
+
                 URL url = new URL(MY_API);
                 HttpURLConnection connection =
                         (HttpURLConnection) url.openConnection();
@@ -90,7 +58,9 @@ public class ordersummary extends AppCompatActivity {
                 while ((tmp = reader.readLine()) != null)
                     json.append(tmp).append("\n");
                 reader.close();
+
                 JSONObject data = new JSONObject(json.toString());
+
                 // This value will be 404 if the request was not
                 // successful
 
@@ -104,7 +74,25 @@ public class ordersummary extends AppCompatActivity {
 
 
         protected void onPostExecute(JSONObject data) {
-
+            if(data!=null){
+                try {
+                    String details = data.getString("result");
+                    if(details.compareTo("true")==0){
+                        Intent intent = new Intent(testlogin.this,ordersummary.class);
+                        intent.putExtras(b);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if(details.compareTo("false")==0){
+                        Intent intent = new Intent(testlogin.this,login.class);
+                        intent.putExtras(b);
+                        startActivity(intent);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

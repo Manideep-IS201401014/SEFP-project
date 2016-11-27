@@ -29,4 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
+    public void history(View view){
+        Intent intent = new Intent(MainActivity.this,login.class);
+        Bundle b = new Bundle();
+        b.putString("key","history");
+        intent.putExtras(b);
+        startActivity(intent);
+    }
 }

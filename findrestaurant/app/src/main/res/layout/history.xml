@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.cmanideep96.findrestaurant.MainActivity">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
-
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#f46943"
@@ -37,34 +31,28 @@
                 android:textColor="#fffdfd"/>
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
+
     <TextView
         android:layout_margin="8dp"
-        android:layout_width="match_parent"
+        android:paddingTop="16dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="24sp"
+        android:text="PAYMENT HISTORY:"
         android:textColor="#000"
-        android:text="Order Delicious food !!!!"/>
-    <EditText
-        android:id="@+id/city_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter the place"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:inputType="textMultiLine" />
-    <Button
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
+        android:textSize="18sp"/>
+<TextView
+    android:layout_margin="8dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/name"
+    android:textSize="18sp"
+    android:textColor="#000"/>
+    <TextView
+        android:padding="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Find restaurants"
-        android:onClick="process"/>
-    <Button
-        android:layout_margin="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recent History"
-        android:onClick="history"/>
+        android:id="@+id/summary"
+        android:textSize="16sp"
+        android:textColor="#000"/>
+
 </LinearLayout>

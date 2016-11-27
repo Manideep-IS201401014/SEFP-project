@@ -5,12 +5,10 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,45 +19,40 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Created by cmanideep96 on 05/11/2016.
+ * Created by cmanideep96 on 25/11/2016.
  */
-public class ordersummary extends AppCompatActivity {
-    public RetrieveFeedTask ordersumm = new RetrieveFeedTask();
-    String summary ="";
+public class login extends AppCompatActivity{
     String username="";
-    String restaurantName="";
-    String cost="";
+    String password="";
+    RetrieveFeedTask retrieveFeedTask=new RetrieveFeedTask();
+    Bundle b;
+    String key="";
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.summary);
+        setContentView(R.layout.login);
         TextView app_name = (TextView)findViewById(R.id.app_name);
         Typeface face = Typeface.createFromAsset(getAssets(),"fonts/GreatVibes-Regular.otf");
         app_name.setTypeface(face);
-        Bundle b = getIntent().getExtras();
-        summary=b.getCharSequence("summ").toString();
-        summary=summary.trim();
-        cost=b.getCharSequence("cost").toString();
-        TextView textView = (TextView)findViewById(R.id.order);
-        String[] price = summary.split(",");
-        String r="";
-        for(int i=0;i<price.length;i++){
-            r=r+price[i]+"\n";
+        b = getIntent().getExtras();
+        try {
+
+            key= b.getCharSequence("key").toString();
+
+        }catch (Exception e) {
+
         }
-        textView.setText("Total Cost: RS."+cost+"\n\n"+r);
-        username=b.getCharSequence("username").toString();
-        restaurantName=b.getCharSequence("name").toString();
-        ordersumm.execute();
-    }
-    public void back(View view){
-        Intent intent = new Intent(ordersummary.this,MainActivity.class);
-        startActivity(intent);
-    }
 
-
+    }
+    public void Login(View view){
+        EditText user =(EditText)findViewById(R.id.username);
+        username=user.getText().toString();
+        EditText pass=(EditText)findViewById(R.id.password);
+        password=pass.getText().toString();
+        retrieveFeedTask.execute();
+    }
     class RetrieveFeedTask extends AsyncTask<Void, Void, JSONObject> {
 
         private Exception exception;
@@ -74,9 +67,9 @@ public class ordersummary extends AppCompatActivity {
         protected JSONObject doInBackground(Void... urls) {
 
             try {
-                String j=URLEncoder.encode(summary, "UTF-8");
-//                String MY_API = "http://10.0.5.62/insert.php/?summary=" + j+"&user="+username+"&name="+restaurantName+"&cost=990";
-                String MY_API ="http://192.168.43.38/insert.php/?summary="+j+"&user="+username+"&cost="+cost+"&name="+restaurantName;
+                String j= URLEncoder.encode("", "UTF-8");
+                String MY_API = "http://192.168.43.38/login1.php/?user=" + username+"&pass="+password;
+
                 URL url = new URL(MY_API);
                 HttpURLConnection connection =
                         (HttpURLConnection) url.openConnection();
@@ -90,7 +83,9 @@ public class ordersummary extends AppCompatActivity {
                 while ((tmp = reader.readLine()) != null)
                     json.append(tmp).append("\n");
                 reader.close();
+
                 JSONObject data = new JSONObject(json.toString());
+
                 // This value will be 404 if the request was not
                 // successful
 
@@ -104,7 +99,34 @@ public class ordersummary extends AppCompatActivity {
 
 
         protected void onPostExecute(JSONObject data) {
+            if(data!=null){
+                try {
+                    String details = data.getString("result");
 
+                    if(details.compareTo("true")==0){
+                        if(key!=""){
+                            Intent intent = new Intent(login.this,recenthistory.class);
+                            b.putString("username", username);
+                            intent.putExtras(b);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else {
+                            Intent intent = new Intent(login.this, ordersummary.class);
+                            b.putString("username", username);
+                            intent.putExtras(b);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                    else{
+                        Toast toast =Toast.makeText(login.this,"Credentials are not correct",Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

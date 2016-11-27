@@ -30,6 +30,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,8 +80,9 @@ public class restaurant_view extends AppCompatActivity {
         protected JSONObject doInBackground(Void... urls) {
 
             try {
-                String OPEN_WEATHER_MAP = "http://10.0.5.62/try2.php/?location=" + city_name;
-                URL url = new URL(OPEN_WEATHER_MAP);
+                String j= URLEncoder.encode(city_name, "UTF-8");
+                String MY_API = "http://192.168.43.38/try2.php/?location=" + city_name;
+                URL url = new URL(MY_API);
                 HttpURLConnection connection =
                         (HttpURLConnection) url.openConnection();
                 //connection.addRequestProperty("x-api-key", OPEN_WEATHER_MAP_API);
